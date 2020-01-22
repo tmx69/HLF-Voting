@@ -16,6 +16,8 @@ public class EnrollController {
     private static final String url_ca = "https://ca.org1.example.com:7054";
     private static final String msp = "Org1MSP";
 
+    private static AppUser curUser;
+
     private static AppUser getAppUser(FabricClient fabricClient, EnrollUser user) throws Exception {
         AppUser appUser;
 
@@ -30,9 +32,9 @@ public class EnrollController {
     }
 
     @PostMapping(path = "/", consumes = "application/json", produces = "application/json")
-    public String enroll(@RequestBody EnrollUser user) throws Exception{
+    public void enroll(@RequestBody EnrollUser user) throws Exception{
         FabricClient fabricClient = new FabricClient(url_ca, user.getOrg());
         AppUser appUser = getAppUser(fabricClient, user);
-        return appUser.getEnrollment().toString();
+        this.curUser = appUser;
     }
 }
