@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class EnrollController {
     private static final String url = "0.0.0.0";
     private static final String url_ca = "https://ca.org1.example.com:7054";
+    private static final String msp = "Org1MSP";
 
     private static AppUser getAppUser(FabricClient fabricClient, EnrollUser user) throws Exception {
         AppUser appUser;
@@ -22,7 +23,7 @@ public class EnrollController {
             return Storage.load(user.getName());
         }
 
-        appUser = fabricClient.enrollUser(user.getName(), user.getOrg(), user.getMsp(), user.getSecret());
+        appUser = fabricClient.enrollUser(user.getName(), user.getOrg(), msp, user.getSecret());
         Storage.save(appUser);
 
         return appUser;
